@@ -1,5 +1,6 @@
 package com.rad.moviedatabase
 {
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.rad.moviedatabase.events.MovieDatabaseFaultEvent;
 	import com.rad.moviedatabase.events.MovieDatabaseImageEvent;
 	import com.rad.moviedatabase.events.MovieDatabaseResultEvent;
@@ -81,9 +82,9 @@ package com.rad.moviedatabase
 		/////////
 		// PUBLIC METHODES
 		/////////
-		public function searchByTitle(title:String, page:int=1, includeAdult:Boolean = false):void
+		public function searchByTitle(title:String, language:String="en",page:int=1, includeAdult:Boolean = false):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"search/movie?query="+title+"&api_key="+api_key+"&page="+page+"&include_adult="+includeAdult;
+			var url:String = MOVIE_DB_BASE_URL+"search/movie?query="+title+"&api_key="+api_key+"&page="+page+"&include_adult="+includeAdult+"&language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = SEARCH_BY_TITLE;
 			_loader.returnType = MovieDatabaseResultEvent.SEARCH_BY_TITLE;
@@ -99,16 +100,16 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getCollectionInfo(id:String):void
+		public function getCollectionInfo(id:String, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"collection/"+id+"?api_key="+api_key;
+			var url:String = MOVIE_DB_BASE_URL+"collection/"+id+"?api_key="+api_key+"&language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = MOVIE_INFO;
 			_loader.returnType = MovieDatabaseResultEvent.MOVIE_INFO;
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getMovieInfo(id:String):void
+		public function getMovieInfo(id:String, language:String="en"):void
 		{
 			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"?api_key="+api_key;
 			_loader =  _getUrlLoader(url);
@@ -117,9 +118,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));	
 		}
 		
-		public function getAlternateMovieTitles(id:String):void
+		public function getAlternateMovieTitles(id:String, country:String="US"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"alternative_titles?api_key="+api_key;
+			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"alternative_titles?api_key="+api_key+"?country="+country;
 			_loader =  _getUrlLoader(url);
 			_loader.type = ALTERNATE_MOVIE_TITLES;
 			_loader.returnType = MovieDatabaseResultEvent.ALTERNATE_MOVIE_TITLES;
@@ -135,9 +136,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getMovieImages(id:String):void
+		public function getMovieImages(id:String, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"images?api_key="+api_key;
+			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"images?api_key="+api_key+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = MOVIE_IMAGES;
 			_loader.returnType = MovieDatabaseResultEvent.MOVIE_IMAGES;
@@ -162,9 +163,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getMovieTrailers(id:String):void
+		public function getMovieTrailers(id:String, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"trailers?api_key="+api_key;
+			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"trailers?api_key="+api_key+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = MOVIE_TRAILERS;
 			_loader.returnType = MovieDatabaseResultEvent.MOVIE_TRAILERS;
@@ -180,9 +181,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getSimilarMovies(id:String, page:int=1):void
+		public function getSimilarMovies(id:String, page:int=1, language:String="1"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"similar_movies?api_key="+api_key+"&page="+page;
+			var url:String = MOVIE_DB_BASE_URL+"movie/"+id+"similar_movies?api_key="+api_key+"&page="+page+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = SIMILAR_MOVIES;
 			_loader.returnType = MovieDatabaseResultEvent.SIMILAR_MOVIES;
@@ -198,9 +199,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getPersonCredits(id:String):void
+		public function getPersonCredits(id:String, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"person/"+id+"/credits?api_key="+api_key;
+			var url:String = MOVIE_DB_BASE_URL+"person/"+id+"/credits?api_key="+api_key+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = PERSON_CREDITS;
 			_loader.returnType = MovieDatabaseResultEvent.PERSON_CREDITS;
@@ -216,9 +217,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getMoviesInTheatres(page:int=1):void
+		public function getMoviesInTheatres(page:int=1, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/now-playing?api_key="+api_key+"&page="+page;
+			var url:String = MOVIE_DB_BASE_URL+"movie/now-playing?api_key="+api_key+"&page="+page+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = MOVIES_IN_THEATRES;
 			_loader.returnType = MovieDatabaseResultEvent.MOVIES_IN_THEATRES;
@@ -234,9 +235,9 @@ package com.rad.moviedatabase
 			_loader.load(new URLRequest(url));
 		}
 		
-		public function getTopRatedMovies(page:int = 1):void
+		public function getTopRatedMovies(page:int = 1, language:String="en"):void
 		{
-			var url:String = MOVIE_DB_BASE_URL+"movie/top-rated?api_key="+api_key+"&page="+page;
+			var url:String = MOVIE_DB_BASE_URL+"movie/top-rated?api_key="+api_key+"&page="+page+"?language="+language;
 			_loader =  _getUrlLoader(url);
 			_loader.type = TOP_RATED_MOVIES;
 			_loader.returnType = MovieDatabaseResultEvent.TOP_RATED_MOVIES;
@@ -332,6 +333,7 @@ package com.rad.moviedatabase
 		
 		private function _onLoader_StatusHandler(event:HTTPStatusEvent):void
 		{
+			MonsterDebugger.trace(this, event.type);
 			if(hasEventListener(event.type))
 				dispatchEvent(event.clone());
 			_loader = event.target as MovieDatabaseLoader;
@@ -340,6 +342,7 @@ package com.rad.moviedatabase
 		
 		private function _onLoader_IOErrorHandler(event:IOErrorEvent):void
 		{
+			MonsterDebugger.trace(this, event.text);
 			_loader = event.target as MovieDatabaseLoader;
 			_releaseUrlLoader(_loader.url);
 		}
@@ -372,6 +375,7 @@ package com.rad.moviedatabase
 		
 		private function _onLoader_SecurityHandler(event:SecurityErrorEvent):void
 		{
+			MonsterDebugger.trace(this, event.text);
 			_loader = event.target as MovieDatabaseLoader;
 			_releaseUrlLoader(_loader.url);
 		}
